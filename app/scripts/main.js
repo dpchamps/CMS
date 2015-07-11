@@ -8,11 +8,14 @@ window.CMS = {
     Routers: {},
     init: function () {
         'use strict';
-        console.log('Hello from Backbone!');
+        //initialize the router and backbone history
+        new CMS.Routers.AdminRouter();
+        Backbone.history.start();
     }
 };
 
 $(document).ready(function () {
     'use strict';
     CMS.init();
+
 });
