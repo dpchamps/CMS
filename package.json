@@ -1,0 +1,33 @@
+{
+  "name": "CMS",
+  "description": "General Staging for a CMS",
+  "version": "0.0.1",
+  "maintainers": [
+    {
+      "name": "Dave Campion",
+      "email": "me@davecampion.com",
+      "web": "www.davecampion.com"
+    }
+  ],
+  "dependencies": {
+    "": ""
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/gasolinewaltz/CMS.git"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "",
+      "url": ""
+    }
+  ],
+  "devDependencies": {
+    "backbone": "^1.2.1",
+    "handlebars": "^3.0.3",
+    "hasher": "^1.2.0",
+    "jquery": "^2.1.4"
+  }
+}
