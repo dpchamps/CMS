@@ -6,6 +6,12 @@ CMS.Routers = CMS.Routers || {};
     'use strict';
 
     CMS.Routers.AdminRouter = Backbone.Router.extend({
+        loginPage : null,
+
+        initialize: function(){
+            this.loginPage = new CMS.Views.Login({ el: $("#content")});
+        },
+
         routes:{
             'login' : 'showLogin',
             'main' : 'showMain',
@@ -15,7 +21,8 @@ CMS.Routers = CMS.Routers || {};
             'main/pageEdit/:page' :'pageEdit'
         },
         showLogin: function(){
-
+            console.log('rendering login page');
+            this.loginPage.render();
         },
         showMain: function(){
 

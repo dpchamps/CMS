@@ -1,0 +1,17 @@
+<div class="absolute-center login-container">
+    <form id="login" class="">
+        <h2>Login</h2>
+        <p id="serverMessage" class="fontColor-red">
+            <%if(typeof error !== 'undefined') {
+                print(error);
+            }%>
+        </p>
+        <input class="login--username" type="text" name="username">
+        <br>
+        <input class="login--password" type="password" name="password">
+        <br>
+        <button class="login--submit" type="submit">Login</button>
+        <br>
+        <a class="login--pass-reset" href="#">Forgot Password</a>
+    </form>
+</div>
