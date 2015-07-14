@@ -7,12 +7,19 @@ CMS.Models = CMS.Models || {};
 
     CMS.Models.Userdata = Backbone.Model.extend({
 
-        url: '',
+        url: CMS.API+'/login',
 
         initialize: function() {
+            this.set({
+                username : sessionStorage['username'],
+                token   : sessionStorage['token']
+            });
+
         },
 
         defaults: {
+            username : '',
+            token : ''
         },
 
         validate: function(attrs, options) {

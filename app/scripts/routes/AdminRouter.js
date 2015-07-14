@@ -21,7 +21,6 @@ CMS.Routers = CMS.Routers || {};
             'main/pageEdit/:page' :'pageEdit'
         },
         showLogin: function(){
-            console.log('rendering login page');
             this.loginPage.render();
         },
         showMain: function(){
