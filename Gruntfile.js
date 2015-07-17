@@ -5,6 +5,11 @@ var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
 var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
+var rewriteModule = require('http-rewrite-middleware'),
+    modRewrite = require('connect-modrewrite'),
+    phpMiddleware = require('connect-php'),
+    path  = require('path');
+
 
 // # Globbing
 // for performance reasons we're only matching one level down:
@@ -26,6 +31,13 @@ module.exports = function (grunt) {
     };
 
     grunt.initConfig({
+        php: {
+            dist: {
+                options: {
+                    port: 5000
+                }
+            }
+        },
         yeoman: yeomanConfig,
         watch: {
             options: {
@@ -64,14 +76,22 @@ module.exports = function (grunt) {
             },
             livereload: {
                 options: {
-                    middleware: function (connect) {
+
+                    middleware: function (connect, options, middlewares) {
+                        var apiPath = path.resolve(__dirname+'/api/src/server.php?request=$1');
                         return [
                             lrSnippet,
+                            modRewrite([
+                                'api/(.*)$ /api/src/server.php?request=$1 [QSA,NC,L]'
+                            ]),
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, yeomanConfig.app)
                         ];
                     }
+
                 }
+
+
             },
             test: {
                 options: {
@@ -334,4 +354,21 @@ module.exports = function (grunt) {
         'test',
         'build'
     ]);
+
+    grunt.registerTask('watchBuild',[
+        'clean:dist',
+        'createDefaultTemplate',
+        'jst',
+        'sass:dist',
+        'useminPrepare',
+        'imagemin',
+        'htmlmin',
+        'concat',
+        'cssmin',
+        'uglify',
+        'copy',
+        'rev',
+        'usemin',
+        'watch'
+    ])
 };
