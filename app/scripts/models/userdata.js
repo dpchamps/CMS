@@ -14,7 +14,6 @@ CMS.Models = CMS.Models || {};
                 username : sessionStorage['username'],
                 token   : sessionStorage['token']
             });
-
         },
 
         defaults: {
