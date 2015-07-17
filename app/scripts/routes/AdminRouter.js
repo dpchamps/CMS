@@ -18,7 +18,8 @@ CMS.Routers = CMS.Routers || {};
             'main/settings' : 'showSettings',
             'main/logout' : 'showLogout',
             'main/itemEdit/:item' : 'itemEdit',
-            'main/pageEdit/:page' :'pageEdit'
+            'main/pageEdit/:page' :'pageEdit',
+            'api' : 'fetchApi'
         },
         showLogin: function(){
             this.loginPage.render();

@@ -27,7 +27,6 @@ CMS.Views = CMS.Views || {};
         },
 
         render: function () {
-
             this.$el.html(this.template());
         }
 

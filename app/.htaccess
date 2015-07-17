@@ -1,0 +1,11 @@
+<IfModule php5_module>
+	php_value session.cookie_httponly true
+</IfModule>
+<ifModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{SERVER_PORT} *
+    RewriteRule api/(.*)$ ../api/src/server.php?request=$1 [QSA,NC,L]
+</ifModule>
+

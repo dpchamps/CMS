@@ -3,7 +3,7 @@
 
 window.CMS = {
     //the api path
-    API : '/api/',
+    API: "../api",
     Models: {},
     Collections: {},
     Views: {},
