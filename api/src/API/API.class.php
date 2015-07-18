@@ -14,6 +14,7 @@ abstract class API {
     
     public function __construct($request){
         //check the config file to see if CORS is enabled
+
         if(ALLOW_CORS){
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Methods: *");
@@ -49,9 +50,13 @@ abstract class API {
             case 'GET':
                 $this->request = $this->_cleanInputs($_GET);
                 break;
-            case 'PUT';
+            case 'PUT':
                 $this->request = $this->_cleanInputs($_GET);
                 $this->file = file_get_contents("php://input");
+                break;
+            case 'OPTIONS':
+                header("HTTP/1.1 " . 200 . " " . $this->_requestStatus(200));
+                header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
                 break;
             default:
                 $this->_response('Invalid Method', 405);
@@ -60,6 +65,9 @@ abstract class API {
     }
 
     public function processAPI(){
+        if($this->method === 'OPTIONS'){
+            return;
+        }
         $reflection = new ReflectionMethod($this, $this->endpoint);
         if((int)method_exists($this, $this->endpoint) > 0 &&
             !$reflection->isPrivate()){

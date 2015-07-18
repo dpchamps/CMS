@@ -78,12 +78,8 @@ module.exports = function (grunt) {
                 options: {
 
                     middleware: function (connect, options, middlewares) {
-                        var apiPath = path.resolve(__dirname+'/api/src/server.php?request=$1');
                         return [
                             lrSnippet,
-                            modRewrite([
-                                'api/(.*)$ /api/src/server.php?request=$1 [QSA,NC,L]'
-                            ]),
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, yeomanConfig.app)
                         ];

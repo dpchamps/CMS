@@ -23,6 +23,7 @@ try {
     echo $API->processAPI();
 
 } catch (Exception $e){
+    header("HTTP/1.1 " . 500 . " Internal Server Error");
     echo json_encode( Array('error' => $e->getMessage() ));
 }
 

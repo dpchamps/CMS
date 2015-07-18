@@ -7,7 +7,7 @@ CMS.Models = CMS.Models || {};
 
     CMS.Models.Userdata = Backbone.Model.extend({
 
-        url: CMS.API+'/login',
+        url: CMS.API+'/check_login',
 
         initialize: function() {
             this.set({

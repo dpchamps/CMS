@@ -96,7 +96,7 @@ class REST_API extends API
             !array_key_exists('username', $this->request) ||
             !array_key_exists('token', $this->request)
         ) {
-            return false;
+            throw new Exception('User is not logged in');
         } else {
             $this->User = new User();
             if ($this->User->valid_token($this->request['token'], $this->request['username'])) {
@@ -105,7 +105,11 @@ class REST_API extends API
             }
         }
 
-        return $response;
+        if(!$response){
+            throw new Exception('User has been logged out');
+        }else{
+            return $response;
+        };
     }
 
     protected function logout()

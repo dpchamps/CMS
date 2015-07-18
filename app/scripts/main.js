@@ -3,7 +3,7 @@
 
 window.CMS = {
     //the api path
-    API: "../api",
+    API: "http://localhost/CMS/api",
     Models: {},
     Collections: {},
     Views: {},
@@ -12,9 +12,9 @@ window.CMS = {
     init: function () {
         'use strict';
         //initialize the router and backbone history
-        new CMS.Routers.AdminRouter();
-        Backbone.history.start();
         CMS.Global.userdata = new CMS.Models.Userdata();
+        CMS.Global.router = new CMS.Routers.AdminRouter();
+        Backbone.history.start();
     }
 };
 

@@ -15,8 +15,20 @@ CMS.Views = CMS.Views || {};
             'click .login--pass-reset' : 'passwordReset'
         },
         'login' : function(e){
+            var self = this;
             e.preventDefault();
-            console.log('login');
+            this.model.set({
+                username: $('input.login--username').val(),
+                password: $('input.login--password').val()
+            });
+            this.model.save({},{
+                error: function(m,r,o){
+                    self.render(r.responseJSON);
+                },
+                success: function(){
+                    CMS.Global.router.navigate('#/main', {trigger:true});
+                }
+            })
         },
         'passwordReset': function(e){
             e.preventDefault();
@@ -26,8 +38,8 @@ CMS.Views = CMS.Views || {};
 
         },
 
-        render: function () {
-            this.$el.html(this.template());
+        render: function (response) {
+            this.$el.html(this.template(response));
         }
 
     });

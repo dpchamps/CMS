@@ -7,9 +7,12 @@ CMS.Routers = CMS.Routers || {};
 
     CMS.Routers.AdminRouter = Backbone.Router.extend({
         loginPage : null,
+        mainPage: null,
 
         initialize: function(){
-            this.loginPage = new CMS.Views.Login({ el: $("#content")});
+            this.loginPage = new CMS.Views.Login({
+                model: new CMS.Models.Login(),
+                el: $("#content")});
         },
 
         routes:{
@@ -21,8 +24,21 @@ CMS.Routers = CMS.Routers || {};
             'main/pageEdit/:page' :'pageEdit',
             'api' : 'fetchApi'
         },
+        gateway : function(){
+            return CMS.Global.userdata.save();
+        },
         showLogin: function(){
-            this.loginPage.render();
+            var self = this;
+            $.when(this.gateway())
+                .done(function(){
+                    console.log('success');
+                    CMS.Global.router.navigate('#/main');
+                })
+                .fail(function(m,r,o){
+                    console.log('fail');
+                    self.loginPage.render(r.responseJSON);
+                });
+
         },
         showMain: function(){
 
