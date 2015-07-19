@@ -10,11 +10,14 @@ CMS.Models = CMS.Models || {};
         url: '',
 
         initialize: function() {
+            this.set({
+                username: CMS.Global.userdata.get('username')
+            })
         },
 
         defaults: {
             username: '',
-            pageContent: ''
+            pageContent: {}
 
         },
 

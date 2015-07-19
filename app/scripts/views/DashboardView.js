@@ -18,10 +18,12 @@ CMS.Views = CMS.Views || {};
         events: {},
 
         initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
         },
 
         render: function () {
-            this.$el.html(this.template());
+            console.log(this.model.get('username'));
+            this.$el.html(this.template(this.model.toJSON()));
         }
 
     });
