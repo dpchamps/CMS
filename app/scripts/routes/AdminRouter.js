@@ -7,15 +7,15 @@ CMS.Routers = CMS.Routers || {};
 
     CMS.Routers.AdminRouter = Backbone.Router.extend({
         loginPage : null,
-        mainPage: null,
+        dashboard: null,
 
         initialize: function(){
             this.loginPage = new CMS.Views.Login({
                 model: new CMS.Models.Login(),
                 el: $("#content")
             });
-            this.mainPage = new CMS.Views.Main({
-                model: new CMS.Models.MainModel(),
+            this.dashboard = new CMS.Views.DashboardView({
+                model: new CMS.Models.DashboardModel(),
                 el: $('#content')
             });
         },
@@ -29,12 +29,12 @@ CMS.Routers = CMS.Routers || {};
             'main/pageEdit/:page' :'pageEdit',
             'api' : 'fetchApi'
         },
-        gateway : function(){
-            return CMS.Global.userdata.save();
+        checkLogin : function(){
+            return $.when(CMS.Global.userdata.save());
         },
         showLogin: function(){
             var self = this;
-            $.when(this.gateway())
+            this.checkLogin()
                 .done(function(){
                     console.log('success');
                     CMS.Global.router.navigate('#/main');
@@ -47,9 +47,9 @@ CMS.Routers = CMS.Routers || {};
         },
         showMain: function(){
             var self = this;
-            $.when(this.gateway())
+           this.checkLogin()
                 .done(function(m,r,o){
-                    self.mainPage.render();
+                    self.dashboard.render();
                 })
                 .fail(function(m,r,o){
                     self.loginPage.render(r.responseJSON);
