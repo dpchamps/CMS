@@ -12,7 +12,12 @@ CMS.Routers = CMS.Routers || {};
         initialize: function(){
             this.loginPage = new CMS.Views.Login({
                 model: new CMS.Models.Login(),
-                el: $("#content")});
+                el: $("#content")
+            });
+            this.mainPage = new CMS.Views.Main({
+                model: new CMS.Models.MainModel(),
+                el: $('#content')
+            });
         },
 
         routes:{
@@ -41,7 +46,14 @@ CMS.Routers = CMS.Routers || {};
 
         },
         showMain: function(){
-
+            var self = this;
+            $.when(this.gateway())
+                .done(function(m,r,o){
+                    self.mainPage.render();
+                })
+                .fail(function(m,r,o){
+                    self.loginPage.render(r.responseJSON);
+                })
         },
         showSettings: function(){
 
