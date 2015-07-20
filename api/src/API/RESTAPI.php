@@ -62,7 +62,7 @@ class REST_API extends API
         $this->cms = new Cms();
         $this->util = new Utilities();
         //first check the endpoint method name, read is allowed without an api key or token
-        if (in_array($this->endpoint, $this->Unverified_Endpoints)) {
+        if (in_array($this->endpoint, $this->Unverified_Endpoints) || $this->method === 'OPTIONS') {
             //can add security measures here to ensure someone isn't spamming the system
         } else {
             $this->verify_user();

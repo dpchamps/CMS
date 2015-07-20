@@ -21,6 +21,12 @@ CMS.Models = CMS.Models || {};
             token : ''
         },
 
+        logout : function(){
+            this.set({
+                token: undefined
+            });
+            sessionStorage.removeItem('token');
+        },
         validate: function(attrs, options) {
         },
 

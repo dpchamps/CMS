@@ -15,8 +15,14 @@ CMS.Views = CMS.Views || {};
 
         className: '',
 
-        events: {},
+        events: {
+            'click #logout' : 'logout'
+        },
+        'logout': function(e){
+            e.preventDefault();
+            CMS.Global.router.navigate('#/logout', {trigger:true});
 
+        },
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
         },
