@@ -21,14 +21,14 @@ CMS.Views = CMS.Views || {};
                 username: $('input.login--username').val(),
                 password: $('input.login--password').val()
             });
-            this.model.save({},{
-                error: function(m,r,o){
+            $.when(this.model.save())
+                .fail(function(m,r,o){
                     self.render(r.responseJSON);
-                },
-                success: function(){
+                })
+                .done(function(m,r,o){
                     CMS.Global.router.navigate('#/dashboard', {trigger:true});
-                }
-            })
+                });
+
         },
         'passwordReset': function(e){
             e.preventDefault();

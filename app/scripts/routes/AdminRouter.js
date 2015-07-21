@@ -14,10 +14,7 @@ CMS.Routers = CMS.Routers || {};
                 model: new CMS.Models.Login(),
                 el: $("#content")
             });
-            this.dashboard = new CMS.Views.DashboardView({
-                model: new CMS.Models.DashboardModel(),
-                el: $('#content')
-            });
+
         },
 
         routes:{
@@ -27,7 +24,9 @@ CMS.Routers = CMS.Routers || {};
             'logout' : 'showLogout',
             'dashboard/itemEdit/:item' : 'itemEdit',
             'dashboard/pageEdit/:page' :'pageEdit',
-            '*path' : 'showDefault'
+            '' : 'showDefault',
+            '#/' : 'showDefault'
+
         },
         checkLogin : function(){
             var promise =
@@ -57,14 +56,18 @@ CMS.Routers = CMS.Routers || {};
         },
         showMain: function(){
             var self = this;
-           this.checkLogin()
+            this.dashboard = new CMS.Views.DashboardView({
+                model: new CMS.Models.DashboardModel(),
+                el: $('#content')
+            });
+            this.checkLogin()
                 .done(function(m,r,o){
                     self.dashboard.render();
                 })
                 .fail(function(m,r,o){
                    CMS.Global.router.navigate('#/login',{trigger:false});
                    self.loginPage.render(r.responseJSON);
-                })
+                });
         },
         showSettings: function(){
 
