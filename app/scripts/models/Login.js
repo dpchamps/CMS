@@ -17,8 +17,6 @@ CMS.Models = CMS.Models || {};
                   username: response.username,
                   token: response.token
               });
-              sessionStorage.setItem('username', response.username);
-              sessionStorage.setItem('token', response.token);
           }
 
         },

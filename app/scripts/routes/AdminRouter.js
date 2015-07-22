@@ -72,15 +72,19 @@ CMS.Routers = CMS.Routers || {};
                 });
         },
         showSettings: function(){
-            this.showMain();
+            this.showDashboard();
             var settings = new CMS.Views.Settings({
                 el: $('#modal')
             }).render();
 
         },
         changeUsername: function(){
-            this.showMain();
+            this.showDashboard();
             this.showSettings();
+            new CMS.Views.Changeusername({
+                model: new CMS.Models.Changeusername(),
+                el: $('.modal-content-inner')
+            }).render();
         },
         changePassword: function(){
 
@@ -108,7 +112,7 @@ CMS.Routers = CMS.Routers || {};
 
         },
         showDefault: function(){
-            CMS.Global.router.navigate('#dashboard');
+            CMS.Global.router.navigate('#dashboard', {trigger:true});
         }
     });
 

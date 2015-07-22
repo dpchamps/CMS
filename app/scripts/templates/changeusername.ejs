@@ -1,0 +1,37 @@
+<h2><%= parentView %> > Change Username</h2>
+<a href="#dashboard/settings">Back to <%= parentView %></a>
+<p id="serverMessage" class="fontColor-red">
+    <%if(typeof serverMessage !== 'undefined') {
+        print(serverMessage);
+    }%>
+</p>
+<hr>
+<h4><strong>Your Current Username is: <%= username %></strong></h4>
+<form>
+<ul>
+
+    <li>
+        <label for="new-username">New Username:</label><br>
+        <input id="new-username" required="true">
+    </li>
+    <li>
+        <label for="password">Password:</label><br>
+        <input id="password" type="password" required="true">
+    </li>
+</ul>
+<button id="usernameSubmit" type="submit">
+    <% if(waiting){ %>
+            <div class="button-wait">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+    <%}else{%>
+        <div class="defaultText">Submit</div>
+    <%}%>
+</button>
+</form>
+
+
