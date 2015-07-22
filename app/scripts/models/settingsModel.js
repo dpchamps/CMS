@@ -5,9 +5,9 @@ CMS.Models = CMS.Models || {};
 (function () {
     'use strict';
 
-    CMS.Models.Changeusername = Backbone.Model.extend({
+    CMS.Models.SettingsModel = Backbone.Model.extend({
 
-        url: CMS.API+'/changeusername',
+        url: CMS.API+'/userinfo',
 
         initialize: function() {
             this.set('username', CMS.Global.userdata.get('username'));
@@ -26,7 +26,7 @@ CMS.Models = CMS.Models || {};
             if(response.error){
                 this.set('serverMessage', response.error);
             }else{
-                this.set('serverMessage', 'Username Successfully Changed');
+                this.set('serverMessage', response);
             }
         }
     });

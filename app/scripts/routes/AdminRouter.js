@@ -82,7 +82,7 @@ CMS.Routers = CMS.Routers || {};
             this.showDashboard();
             this.showSettings();
             new CMS.Views.Changeusername({
-                model: new CMS.Models.Changeusername(),
+                model: new CMS.Models.SettingsModel(),
                 el: $('.modal-content-inner')
             }).render();
         },
@@ -90,7 +90,7 @@ CMS.Routers = CMS.Routers || {};
             this.showDashboard();
             this.showSettings();
             new CMS.Views.Changepassword({
-                model: new CMS.Models.ChangepasswordModel(),
+                model: new CMS.Models.SettingsModel(),
                 el: $('.modal-content-inner')
             }).render();
         },
