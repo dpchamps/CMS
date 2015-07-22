@@ -26,7 +26,7 @@ CMS.Views = CMS.Views || {};
                     self.render(r.responseJSON);
                 })
                 .done(function(m,r,o){
-                    CMS.Global.router.navigate('#/dashboard', {trigger:true});
+                    CMS.Global.router.navigate('#dashboard', {trigger:true});
                 });
 
         },
@@ -39,6 +39,7 @@ CMS.Views = CMS.Views || {};
         },
 
         render: function (response) {
+
             this.$el.html(this.template(response));
         }
 

@@ -19,8 +19,10 @@ CMS.Routers = CMS.Routers || {};
 
         routes:{
             'login' : 'showLogin',
-            'dashboard' : 'showMain',
+            'dashboard' : 'showDashboard',
             'dashboard/settings' : 'showSettings',
+            'dashboard/settings/change-username' : 'changeUsername',
+            'dashboard/settings/change-password' : 'changePassword',
             'logout' : 'showLogout',
             'dashboard/itemEdit/:item' : 'itemEdit',
             'dashboard/pageEdit/:page' :'pageEdit',
@@ -44,7 +46,7 @@ CMS.Routers = CMS.Routers || {};
                 this.checkLogin()
                     .done(function(){
                         console.log('success');
-                        CMS.Global.router.navigate('#/dashboard');
+                        CMS.Global.router.navigate('#dashboard');
                     })
                     .fail(function(m,r,o){
                         console.log('fail');
@@ -54,7 +56,7 @@ CMS.Routers = CMS.Routers || {};
                 self.loginPage.render(e);
             }
         },
-        showMain: function(){
+        showDashboard: function(){
             var self = this;
             this.dashboard = new CMS.Views.DashboardView({
                 model: new CMS.Models.DashboardModel(),
@@ -65,11 +67,22 @@ CMS.Routers = CMS.Routers || {};
                     self.dashboard.render();
                 })
                 .fail(function(m,r,o){
-                   CMS.Global.router.navigate('#/login',{trigger:false});
+                   CMS.Global.router.navigate('#login',{trigger:false});
                    self.loginPage.render(r.responseJSON);
                 });
         },
         showSettings: function(){
+            this.showMain();
+            var settings = new CMS.Views.Settings({
+                el: $('#modal')
+            }).render();
+
+        },
+        changeUsername: function(){
+            this.showMain();
+            this.showSettings();
+        },
+        changePassword: function(){
 
         },
         showLogout: function(){
@@ -95,7 +108,7 @@ CMS.Routers = CMS.Routers || {};
 
         },
         showDefault: function(){
-            CMS.Global.router.navigate('#/dashboard');
+            CMS.Global.router.navigate('#dashboard');
         }
     });
 
