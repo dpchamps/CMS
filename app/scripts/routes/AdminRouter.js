@@ -87,7 +87,12 @@ CMS.Routers = CMS.Routers || {};
             }).render();
         },
         changePassword: function(){
-
+            this.showDashboard();
+            this.showSettings();
+            new CMS.Views.Changepassword({
+                model: new CMS.Models.ChangepasswordModel(),
+                el: $('.modal-content-inner')
+            }).render();
         },
         showLogout: function(){
             var logout = new CMS.Models.Logout(),
