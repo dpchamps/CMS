@@ -28,12 +28,17 @@ CMS.Views = CMS.Views || {};
 
         },
         initialize: function () {
+
             this.listenTo(this.model, 'change', this.render);
         },
 
         render: function () {
-            console.log(this.model.get('username'));
             this.$el.html(this.template(this.model.toJSON()));
+
+            this.pagePanel = new CMS.Views.Pagepanel({
+                collection : new CMS.Collections.Pages(),
+                el : this.$el.find('.page-panel')
+            });
         }
 
     });

@@ -62,7 +62,7 @@ class REST_API extends API
         $this->cms = new Cms();
         $this->util = new Utilities();
         //first check the endpoint method name, read is allowed without an api key or token
-        if (in_array($this->endpoint, $this->Unverified_Endpoints) || $this->method === 'OPTIONS') {
+        if (in_array($this->endpoint, $this->Unverified_Endpoints) || $this->method === 'OPTIONS' ||$this->method === 'GET') {
             //can add security measures here to ensure someone isn't spamming the system
         } else {
             $this->verify_user();
@@ -228,7 +228,7 @@ class REST_API extends API
 
     protected function cms()
     {
-        $this->util->is_method($this->method, 'POST');
+        //$this->util->is_method($this->method, 'GET');
         $action = $this->util->required($this->args[0], "No content specified.");
         $response = NULL;
         switch ($action) {

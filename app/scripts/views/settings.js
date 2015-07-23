@@ -27,7 +27,6 @@ CMS.Views = CMS.Views || {};
             CMS.Global.router.navigate('dashboard');
         },
         render: function () {
-            console.log('rendering settings', this, this.$el, this.template);
             this.$el
                 .html(this.template)
                 .css('visibility', 'visible');
