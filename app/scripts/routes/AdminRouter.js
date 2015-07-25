@@ -14,9 +14,7 @@ CMS.Routers = CMS.Routers || {};
                 model: new CMS.Models.Login(),
                 el: $("#content")
             });
-
         },
-
         routes:{
             'login' : 'showLogin',
             'dashboard' : 'showDashboard',
@@ -26,6 +24,7 @@ CMS.Routers = CMS.Routers || {};
             'logout' : 'showLogout',
             'dashboard/itemEdit/:item' : 'itemEdit',
             'dashboard/pageEdit/:page' :'pageEdit',
+            'dashboard/page-content(/)(:page)(/)(:subPage)' : 'pageContent',
             '' : 'showDefault',
             '#/' : 'showDefault'
 
@@ -56,12 +55,14 @@ CMS.Routers = CMS.Routers || {};
                 self.loginPage.render(e);
             }
         },
-        showDashboard: function(){
+        showDashboard: function(args){
+
             var self = this;
             this.dashboard = new CMS.Views.DashboardView({
                 model: new CMS.Models.DashboardModel(),
                 el: $('#content')
             });
+            _.extend(this.dashboard, args);
             this.checkLogin()
                 .done(function(m,r,o){
                     self.dashboard.render();
@@ -110,8 +111,30 @@ CMS.Routers = CMS.Routers || {};
                     logoutResponse(m,r,o);
                 });
         },
-        itemEdit: function(item){
+        pageContent: function(page, subPage){
+            var self = this;
+            if(!page ){
+                this.navigate('#dashboard');
+            }else{
 
+                var contentPanel = new CMS.Views.Pagecontent({
+                    collection: new CMS.Collections.PageContentItems([], {
+                        page: page,
+                        subContent: subPage
+                    })
+                });
+                contentPanel.collection.fetch()
+                    .done(function(){
+                        var subDivide = contentPanel.collection.toJSON()[0].subDivide[0].type;
+                        if(!subPage && subDivide){
+                            contentPanel.collection.subContent = subDivide;
+                            self.navigate('#dashboard/page-content/'+page+'/'+subDivide);
+                        }
+                        self.showDashboard({contentPanel : contentPanel});
+                    })
+            }
+        },
+        itemEdit: function(item){
         },
         pageEdit: function(page){
 

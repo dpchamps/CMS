@@ -1,0 +1,33 @@
+<%
+    //first build the subdivide if there's any
+var hashArray = window.location.hash.split('/'),
+    fragment = hashArray[ hashArray.length-2 ],
+    url = '#dashboard/page-content/'+fragment+'/';
+if(subDivide){
+    _.each(subDivide, function(item){
+%>
+        <a href="<%=url+item['type']%>"><%=item['type']%></a>
+<%
+    })
+}
+
+//next, we break down the 'group'
+_.each(sectionOrder, function(type){
+%>
+    <h3><%=type%></h3>
+    <ul>
+<%
+    _.each(items.where({header: type}), function(item){
+%>
+        <li>
+        <%=item.get('title')%>
+        </li>
+<%
+    });
+%>
+    </ul>
+<%
+});
+%>
+
+

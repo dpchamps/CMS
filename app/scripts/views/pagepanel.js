@@ -25,7 +25,6 @@ CMS.Views = CMS.Views || {};
             var self = this;
             this.collection.fetch()
                 .done(function(){
-                    console.log(self.collection.toJSON());
                     _.each(self.collection.toJSON(), function(page){
                         self.$el.append(self.template(page));
                     });

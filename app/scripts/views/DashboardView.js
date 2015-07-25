@@ -6,6 +6,9 @@ CMS.Views = CMS.Views || {};
     'use strict';
 
     CMS.Views.DashboardView = Backbone.View.extend({
+        //child views
+        pagePanel : null,
+        contentPanel: null,
 
         template: JST['app/scripts/templates/Dashboard.ejs'],
 
@@ -30,15 +33,22 @@ CMS.Views = CMS.Views || {};
         initialize: function () {
 
             this.listenTo(this.model, 'change', this.render);
+
         },
 
         render: function () {
+            //render this template first
             this.$el.html(this.template(this.model.toJSON()));
-
+            //then create child views
             this.pagePanel = new CMS.Views.Pagepanel({
                 collection : new CMS.Collections.Pages(),
                 el : this.$el.find('.page-panel')
             });
+            if(this.contentPanel){
+                this.contentPanel.setElement(this.$el.find('.page-content'));
+                this.contentPanel.render();
+            }
+
         }
 
     });
