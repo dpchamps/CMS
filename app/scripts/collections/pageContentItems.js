@@ -13,14 +13,12 @@ CMS.Collections = CMS.Collections || {};
         url: '',
         model: CMS.Models.PageContentItem,
         initialize: function(models, options){
-            console.log(options.page, options.subContent);
             this.page = options.page;
             this.subContent = options.subContent;
             this.url = this.urlRoot + '/'+this.page;
             if(this.subContent){
                 this.url += '/'+this.subContent;
             }
-            console.log(this.url);
         }
     });
 
