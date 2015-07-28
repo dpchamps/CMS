@@ -144,7 +144,13 @@ CMS.Routers = CMS.Routers || {};
             var self = this;
             this.pageContent(page, subPage)
                 .done(function(){
-                    var collection = self.dashboard.contentPanel.itemCollection;
+                    var collection = self.dashboard.contentPanel.itemCollection,
+                        itemEdit = new CMS.Views.ItemEditSingle({
+                            model: collection.get(item),
+                            el : $('#modal')
+                        }).render();
+
+
 
                 });
 

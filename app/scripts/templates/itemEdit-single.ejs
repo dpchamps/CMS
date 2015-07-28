@@ -1,0 +1,57 @@
+<div class="modal-content absolute-center">
+    <div class="modal-close modal-close-x">&times;</div>
+
+    <div class="modal-content-inner">
+        <h2>Edit Item <strong><%=title%></strong></h2>
+        <form>
+            <div>
+                <label for="title">Title: </label>
+                <input id="title" value="<%=title%>">
+            </div>
+            <div>
+                <%if(price){%>
+                    <label for="price">Price: $</label>
+                    <input id="price" value="<%=price%>">
+                <%}else{%>
+                    <a href="#" class="edit-item--add-price">+Add Price</a>
+                <%}%>
+            </div>
+            <div>
+                <%if(description){%>
+                    <label for="description">Description:</label><br>
+                    <textarea id="description" ><%=description%></textarea>
+                <%}else{%>
+                    <a href="#" class="edit-item--add-description">+Add Description</a>
+                <%}%>
+                </div>
+            <hr>
+            <h3>Additional Info:</h3>
+            <ol>
+
+            <%
+                if(subItem.length>0){
+                    _.each(subItem, function(item, idx){
+            %>
+                <li>
+                    <label for="sub-item-desc-<%=idx%>"></label><br>
+                    <textarea id="sub-item-desc<%=idx%>"><%=item.description%></textarea><br>
+                    <label for="sub-item-price-<%=idx%>">Price: $</label>
+                    <input value="<%=item.subprice%>"><br>
+                   <br>
+                </li>
+                <%
+                    })
+                }
+            %>
+            </ol>
+            <a href="#" class="edit-item--add-sub-item">+Add Item</a>
+
+            <br>
+            <div class="edit-item--update btn btn-primary">Update Item</div>
+            <div class="edit-item--delete btn btn-danger">Delete Item</div>
+            <div class="edit-item--cancel btn btn-warning">Cancel
+            </div>
+        </form>
+
+    </div>
+</div>

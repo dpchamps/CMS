@@ -7,12 +7,18 @@ CMS.Models = CMS.Models || {};
 
     CMS.Models.EditItemModel = Backbone.Model.extend({
 
-        url: '',
+        url: CMS.API+'cms/edit',
 
         initialize: function() {
         },
 
         defaults: {
+            title : '',
+            id: '',
+            description: '',
+            list_order: '',
+            price: '',
+            header: ''
         },
 
         validate: function(attrs, options) {

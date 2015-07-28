@@ -24,15 +24,27 @@ CMS.Modules = CMS.Modules || {};
                             subprice_desc_id : item.subprice_desc_id
                         });
                     }else{
+
                         itemList.push({
                             id : item.id,
                             title: item.title,
-                            description: item.description,
-                            list_order : item.list_order,
                             price: item.price,
                             header: item.header,
-                            subItem: []
+                            subItem: [],
+                            list_order : item.list_order
                         });
+                        if(!itemList[itemList.length-1].price && item.description){
+                            itemList[itemList.length-1].subItem.push({
+                                list_order : item.list_order,
+                                description: item.description,
+                                subprice : item.subprice,
+                                subprice_desc_id : item.subprice_desc_id
+                            });
+                        }else{
+                            _.extend(itemList[itemList.length-1],{
+                                description: item.description
+                            });
+                        }
                     }
                 });
             });
