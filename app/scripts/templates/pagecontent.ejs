@@ -1,8 +1,6 @@
 <%
     //first build the subdivide if there's any
-var hashArray = window.location.hash.split('/'),
-    fragment = hashArray[ hashArray.length-2 ],
-    url = '#dashboard/page-content/'+fragment+'/';
+var url = '#dashboard/page-content/'+page+'/';
 if(subDivide){
     _.each(subDivide, function(item){
 %>
@@ -18,9 +16,10 @@ _.each(sectionOrder, function(type){
     <ul>
 <%
     _.each(items.where({header: type}), function(item){
+
 %>
-        <li>
-        <%=item.get('title')%>
+        <li class="item-editable" data-id="<%=item.get('id')%>">
+        <a href="<%=url+subPage%>/edit/<%=item.get('id')%>"><%=item.get('title')%></a>
         </li>
 <%
     });

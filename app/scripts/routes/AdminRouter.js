@@ -24,7 +24,9 @@ CMS.Routers = CMS.Routers || {};
             'logout' : 'showLogout',
             'dashboard/itemEdit/:item' : 'itemEdit',
             'dashboard/pageEdit/:page' :'pageEdit',
+            'dashboard/page-content' : 'showDashboard',
             'dashboard/page-content(/)(:page)(/)(:subPage)' : 'pageContent',
+            'dashboard/page-content(/)(:page)(/)(:subPage)/edit/(:item)' : 'itemEdit',
             '' : 'showDefault',
             '#/' : 'showDefault'
 
@@ -63,14 +65,14 @@ CMS.Routers = CMS.Routers || {};
                 el: $('#content')
             });
             _.extend(this.dashboard, args);
-            this.checkLogin()
-                .done(function(m,r,o){
-                    self.dashboard.render();
-                })
-                .fail(function(m,r,o){
-                   CMS.Global.router.navigate('#login',{trigger:false});
-                   self.loginPage.render(r.responseJSON);
-                });
+            return this.checkLogin()
+                    .done(function(m,r,o){
+                        self.dashboard.render();
+                    })
+                    .fail(function(m,r,o){
+                       CMS.Global.router.navigate('#login',{trigger:false});
+                       self.loginPage.render(r.responseJSON);
+                    });
         },
         showSettings: function(){
             this.showDashboard();
@@ -112,29 +114,40 @@ CMS.Routers = CMS.Routers || {};
                 });
         },
         pageContent: function(page, subPage){
-            var self = this;
-            if(!page ){
-                this.navigate('#dashboard');
-            }else{
-
-                var contentPanel = new CMS.Views.Pagecontent({
+            var self = this,
+                dashPromise = $.Deferred(),
+                contentPanel = new CMS.Views.Pagecontent({
                     collection: new CMS.Collections.PageContentItems([], {
                         page: page,
                         subContent: subPage
                     })
                 });
-                contentPanel.collection.fetch()
-                    .done(function(){
-                        var subDivide = contentPanel.collection.toJSON()[0].subDivide[0].type;
-                        if(!subPage && subDivide){
-                            contentPanel.collection.subContent = subDivide;
-                            self.navigate('#dashboard/page-content/'+page+'/'+subDivide);
-                        }
-                        self.showDashboard({contentPanel : contentPanel});
-                    })
-            }
+            contentPanel.page = page;
+            contentPanel.subPage= subPage;
+            contentPanel.collection.fetch()
+                .done(function(){
+                    var subDivide = contentPanel.collection.toJSON()[0].subDivide[0].type;
+                    if(!subPage && subDivide){
+                        contentPanel.collection.subContent = subDivide;
+                        contentPanel.subPage = subDivide;
+                        self.navigate('#dashboard/page-content/'+page+'/'+subDivide);
+                    }
+                    self.showDashboard({contentPanel : contentPanel})
+                        .done(function(){
+                            dashPromise.resolve();
+                        });
+                });
+
+            return dashPromise;
         },
-        itemEdit: function(item){
+        itemEdit: function(page, subPage, item){
+            var self = this;
+            this.pageContent(page, subPage)
+                .done(function(){
+                    var collection = self.dashboard.contentPanel.itemCollection;
+
+                });
+
         },
         pageEdit: function(page){
 
