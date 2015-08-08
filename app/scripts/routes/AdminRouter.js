@@ -32,13 +32,13 @@ CMS.Routers = CMS.Routers || {};
 
         },
         checkLogin : function(){
-            var promise =
-            $.when(CMS.Global.userdata.save())
-                .fail(function(m,r,o){
-                    CMS.Global.userdata.logout();
-                });
-
-            return promise.then();
+            var userdata = CMS.Global.userdata.toJSON();
+            $.ajaxSetup({
+                headers : {
+                    'Authorization' :'Basic '+ btoa(userdata.username+":"+userdata.token)
+                }
+            });
+            return $.when(CMS.Global.userdata.fetch());
         },
         showLogin: function(e){
             var self = this;
@@ -67,6 +67,7 @@ CMS.Routers = CMS.Routers || {};
             _.extend(this.dashboard, args);
             return this.checkLogin()
                     .done(function(m,r,o){
+                        console.log("Dashboard trace");
                         self.dashboard.render();
                     })
                     .fail(function(m,r,o){
@@ -98,20 +99,11 @@ CMS.Routers = CMS.Routers || {};
             }).render();
         },
         showLogout: function(){
-            var logout = new CMS.Models.Logout(),
-                self=this,
-                logoutResponse = function(m,r,o){
-                    CMS.Global.router.navigate('login');
-                    self.showLogin(m.responseJSON);
-                };
+            var logout = new CMS.Models.Logout();
 
-            $.when(logout.save())
-                .done(function(m,r,o){
-                    logoutResponse(m,r,o);
-                })
-                .fail(function(m,r,o){
-                    logoutResponse(m,r,o);
-                });
+            logout.fetch().done(function(){
+                CMS.Global.router.navigate('login', {trigger:true});
+            });
         },
         pageContent: function(page, subPage){
             var self = this,

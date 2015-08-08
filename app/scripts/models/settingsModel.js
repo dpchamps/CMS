@@ -7,7 +7,7 @@ CMS.Models = CMS.Models || {};
 
     CMS.Models.SettingsModel = Backbone.Model.extend({
 
-        url: CMS.API+'/userinfo',
+        url: CMS.API+'/user',
 
         initialize: function() {
             this.set('username', CMS.Global.userdata.get('username'));

@@ -21,13 +21,22 @@ CMS.Views = CMS.Views || {};
                 username: $('input.login--username').val(),
                 password: $('input.login--password').val()
             });
-            $.when(this.model.save())
-                .fail(function(m,r,o){
-                    self.render(r.responseJSON);
-                })
-                .done(function(m,r,o){
-                    CMS.Global.router.navigate('#dashboard', {trigger:true});
-                });
+            $.ajaxSetup({
+                headers : {
+                    'Authorization' :'Basic '+ btoa(this.model.get('username')+":"+this.model.get('password'))
+                }
+            });
+            this.model.fetch({
+
+                success : function(c,r,o){
+                    CMS.Global.router.navigate('dashboard', {trigger:true});
+                },
+                error : function(c,r,o){
+                    console.log('error', r.statusText);
+                }
+            });
+
+
 
         },
         'passwordReset': function(e){

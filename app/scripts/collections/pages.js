@@ -6,9 +6,8 @@ CMS.Collections = CMS.Collections || {};
     'use strict';
 
     CMS.Collections.Pages = Backbone.Collection.extend({
-        url: CMS.API+'/cms/page_data',
+        url: CMS.API+'/pages',
         model: CMS.Models.Page
-
     });
 
 })();
