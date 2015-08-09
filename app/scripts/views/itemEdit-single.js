@@ -27,6 +27,7 @@ CMS.Views = CMS.Views || {};
         },
         updateItem: function(e){
             e.preventDefault();
+            console.log(this.$el.find('form'));
             this.model.set({
                 title : this.$el.find('#title').val(),
                 price : this.$el.find('#price').val()
