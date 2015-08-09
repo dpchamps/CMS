@@ -27,22 +27,22 @@ CMS.Views = CMS.Views || {};
         },
         updateItem: function(e){
             e.preventDefault();
-            console.log(this.$el.find('form'));
-            this.model.set({
-                title : this.$el.find('#title').val(),
-                price : this.$el.find('#price').val()
-            });
+            var form = this.$el.find("form").serializeObject();
+            console.log(form, form.item);
+            this.model.set(form.item);
+            console.log(this.model);
             this.model.save({
                 success : function(){
                     this.render();
                 }
             });
+
         },
         closeDialog: function(e){
             e.stopPropagation();
             this.$el.css('visibility', 'hidden');
             this.undelegateEvents();
-            CMS.Global.router.navigate('dashboard');
+            window.history.back();
 
         },
         initialize: function () {

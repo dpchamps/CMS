@@ -2,16 +2,21 @@
     <div class="modal-close modal-close-x">&times;</div>
 
     <div class="modal-content-inner">
-        <h2>Edit Item <strong><%=title%></strong></h2>
+        <h2>Edit Item <strong><%=title%></strong>
+            <button class="edit-item--delete btn-xs btn-danger">Delete Item</button>
+        </h2>
+        <a class="edit-item--remove-item" href="#">-Remove Item</a>
         <form>
+            <input type="hidden" name="item[id]" value="<%=id%>">
             <div>
                 <label for="title">Title: </label>
-                <input id="title" value="<%=title%>">
+                <input name="item[title]" id="title" value="<%=title%>">
             </div>
             <div>
                 <%if(price){%>
                     <label for="price">Price: $</label>
-                    <input id="price" value="<%=price%>"><span><a href="#" class="edit-item--remove-price">-Remove Price</a></span>
+                    <input name="item[price]" id="price" value="<%=price%>">
+                <a href="#" class="edit-item--remove-price">-Remove Price</a>
                 <%}else{%>
                     <a href="#" class="edit-item--add-price">+Add Price</a>
                 <%}%>
@@ -27,13 +32,16 @@
             %>
                 <li>
                     <label for="sub-item-desc-<%=idx%>"></label><br>
-                    <textarea id="sub-item-desc<%=idx%>"><%=item.text%></textarea><br>
+                    <textarea name="item[descriptions][][text]" id="sub-item-desc<%=idx%>"><%=item.text%></textarea>
+                    <a href="#" class="edit-item--remove-item">-Remove Item</a><br>
                     <%if(item.price){%>
                     <label for="sub-item-price-<%=idx%>">Price: $</label>
-                    <input value="<%=item.price%>"><a href="#" class="edit-item--remove-price">-Remove Price</a><br>
+                    <input name="item[descriptions][][price]" value="<%=item.price%>">
+                    <a href="#" class="edit-item--remove-price">-Remove Price</a><br>
                     <%}else{%>
                     <a href="#" class="edit-item--add-price">+Add Price</a>
                     <%}%>
+                    <input type="hidden" name="item[descriptions][][id]" value="<%=item.id%>">
                    <br>
                 </li>
                 <%
@@ -45,7 +53,6 @@
 
             <br>
             <div class="edit-item--update btn btn-primary">Update Item</div>
-            <div class="edit-item--delete btn btn-danger">Delete Item</div>
             <div class="edit-item--cancel btn btn-warning">Cancel
             </div>
         </form>

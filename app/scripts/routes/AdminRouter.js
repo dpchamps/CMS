@@ -116,7 +116,6 @@ CMS.Routers = CMS.Routers || {};
                 });
             contentPanel.page = page;
             contentPanel.subPage= subPage;
-            console.log(contentPanel.page, contentPanel.subPage);
             contentPanel.collection.fetch({
                 success: function(c,r,m){
                     console.log(r);
