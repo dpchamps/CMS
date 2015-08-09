@@ -9,13 +9,13 @@ CMS.Collections = CMS.Collections || {};
         content : '',
         page: '',
         subContent: '',
-        urlRoot : CMS.API+'/cms/page_content/',
+        urlRoot : CMS.API+'/pages/',
         url: '',
         model: CMS.Models.PageContentItem,
         initialize: function(models, options){
             this.page = options.page;
             this.subContent = options.subContent;
-            this.url = this.urlRoot + '/'+this.page;
+            this.url = this.urlRoot +this.page.toLowerCase();
             if(this.subContent){
                 this.url += '/'+this.subContent;
             }

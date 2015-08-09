@@ -116,19 +116,22 @@ CMS.Routers = CMS.Routers || {};
                 });
             contentPanel.page = page;
             contentPanel.subPage= subPage;
-            contentPanel.collection.fetch()
-                .done(function(){
-                    var subDivide = contentPanel.collection.toJSON()[0].subDivide[0].type;
+            console.log(contentPanel.page, contentPanel.subPage);
+            contentPanel.collection.fetch({
+                success: function(c,r,m){
+                    console.log(r);
+                    var subDivide = contentPanel.collection.toJSON()[0].type;
                     if(!subPage && subDivide){
                         contentPanel.collection.subContent = subDivide;
                         contentPanel.subPage = subDivide;
-                        self.navigate('#dashboard/page-content/'+page+'/'+subDivide);
+                        self.navigate('#dashboard/page-content/'+page+'/'+subDivide, {trigger: true});
                     }
                     self.showDashboard({contentPanel : contentPanel})
                         .done(function(){
                             dashPromise.resolve();
                         });
-                });
+                }
+            });
 
             return dashPromise;
         },
@@ -140,9 +143,9 @@ CMS.Routers = CMS.Routers || {};
                         itemEdit = new CMS.Views.ItemEditSingle({
                             model: collection.get(item),
                             el : $('#modal')
-                        }).render();
-
-
+                        });
+                    itemEdit.model.url = CMS.API+"/pages/"+page.toLowerCase()+"/"+subPage;
+                    itemEdit.render();
 
                 });
 

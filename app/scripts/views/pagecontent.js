@@ -30,18 +30,31 @@ CMS.Views = CMS.Views || {};
         },
 
         render: function () {
-            var subDivide = this.collection.toJSON()[0].subDivide,
-                items = this.collection.toJSON()[0].group,
-                itemList = CMS.Modules.createModelObject(items);
-            this.itemCollection = CMS.Modules.getItemCollection(itemList);
-            var templateHash = {
-                subDivide : subDivide,
-                items: this.itemCollection
-            };
-            templateHash.page = this.page;
-            templateHash.subPage = this.subPage;
-            templateHash.sectionOrder = CMS.Modules.getSectionOrder(templateHash.items.toJSON());
-            this.$el.html(this.template(templateHash));
+            console.log(this.collection);
+            this.itemCollection = CMS.Modules.getItemCollection(this.collection.toJSON());
+            var subDivide = Backbone.Collection.extend({
+                url: CMS.API+"/pages/"+this.page.toLowerCase(),
+                model : Backbone.Model.extend({
+                    url: ''
+                })
+            }),
+                self = this;
+            subDivide = new subDivide;
+            subDivide.fetch({
+                success: function(){
+                    var templateHash = {
+                        subDivide : subDivide.toJSON(),
+                        items: self.itemCollection
+                    };
+                    templateHash.page = self.page;
+                    templateHash.subPage = self.subPage;
+                    templateHash.sectionOrder = CMS.Modules.getSectionOrder(templateHash.items.toJSON());
+                    self.$el.html(self.template(templateHash));
+                }
+            });
+
+
+
         }
 
     });

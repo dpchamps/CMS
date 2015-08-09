@@ -7,20 +7,28 @@ CMS.Models = CMS.Models || {};
 
     CMS.Models.EditItemModel = Backbone.Model.extend({
 
-        url: CMS.API+'cms/edit',
+        url: CMS.API+'cms/pages/',
 
         initialize: function() {
+
         },
 
         defaults: {
             title : '',
             id: '',
-            description: '',
+            descriptions: '',
             list_order: '',
             price: '',
             header: ''
         },
-
+        save : function(attrs, options){
+            if(typeof this.attributes.item === 'undefined'){
+                this.attributes = {
+                    "item" : this.attributes
+                }
+            }
+            return Backbone.Model.prototype.save.call(this, attrs, options);
+        },
         validate: function(attrs, options) {
         },
 

@@ -11,32 +11,29 @@
             <div>
                 <%if(price){%>
                     <label for="price">Price: $</label>
-                    <input id="price" value="<%=price%>">
+                    <input id="price" value="<%=price%>"><span><a href="#" class="edit-item--remove-price">-Remove Price</a></span>
                 <%}else{%>
                     <a href="#" class="edit-item--add-price">+Add Price</a>
                 <%}%>
             </div>
-            <div>
-                <%if(description){%>
-                    <label for="description">Description:</label><br>
-                    <textarea id="description" ><%=description%></textarea>
-                <%}else{%>
-                    <a href="#" class="edit-item--add-description">+Add Description</a>
-                <%}%>
-                </div>
+
             <hr>
-            <h3>Additional Info:</h3>
+            <h3>Item Description / Sub Item:</h3>
             <ol>
 
             <%
-                if(subItem.length>0){
-                    _.each(subItem, function(item, idx){
+                if(descriptions.length>0){
+                    _.each(descriptions, function(item, idx){
             %>
                 <li>
                     <label for="sub-item-desc-<%=idx%>"></label><br>
-                    <textarea id="sub-item-desc<%=idx%>"><%=item.description%></textarea><br>
+                    <textarea id="sub-item-desc<%=idx%>"><%=item.text%></textarea><br>
+                    <%if(item.price){%>
                     <label for="sub-item-price-<%=idx%>">Price: $</label>
-                    <input value="<%=item.subprice%>"><br>
+                    <input value="<%=item.price%>"><a href="#" class="edit-item--remove-price">-Remove Price</a><br>
+                    <%}else{%>
+                    <a href="#" class="edit-item--add-price">+Add Price</a>
+                    <%}%>
                    <br>
                 </li>
                 <%
