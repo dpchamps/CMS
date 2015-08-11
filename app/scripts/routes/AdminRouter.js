@@ -31,15 +31,7 @@ CMS.Routers = CMS.Routers || {};
             '#/' : 'showDefault'
 
         },
-        checkLogin : function(){
-            var userdata = CMS.Global.userdata.toJSON();
-            $.ajaxSetup({
-                headers : {
-                    'Authorization' :'Basic '+ btoa(userdata.username+":"+userdata.token)
-                }
-            });
-            return $.when(CMS.Global.userdata.fetch());
-        },
+        
         showLogin: function(e){
             var self = this;
             //no use in logging in multiple times
