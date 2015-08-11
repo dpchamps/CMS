@@ -42,38 +42,23 @@ CMS.Routers = CMS.Routers || {};
         },
         showLogin: function(e){
             var self = this;
-            //if the user has a token set, check the credentials and redirect to main
-            if(typeof CMS.Global.userdata.get('token')!== 'undefined'){
-                this.checkLogin()
-                    .done(function(){
-                        console.log('success');
-                        CMS.Global.router.navigate('#dashboard');
-                    })
-                    .fail(function(m,r,o){
-                        console.log('fail');
-                        self.loginPage.render(r.responseJSON);
-                    });
-            }else{
-                self.loginPage.render(e);
-            }
+            //no use in logging in multiple times
+            CMS.Modules.Auth.checkSession()
+                .done(function(){
+                    self.showDashboard();
+                })
+                .fail(function(){
+                    self.loginPage.render();
+                });
         },
         showDashboard: function(args){
-
             var self = this;
             this.dashboard = new CMS.Views.DashboardView({
                 model: new CMS.Models.DashboardModel(),
                 el: $('#content')
             });
             _.extend(this.dashboard, args);
-            return this.checkLogin()
-                    .done(function(m,r,o){
-                        console.log("Dashboard trace");
-                        self.dashboard.render();
-                    })
-                    .fail(function(m,r,o){
-                       CMS.Global.router.navigate('#login',{trigger:false});
-                       self.loginPage.render(r.responseJSON);
-                    });
+            self.dashboard.render();
         },
         showSettings: function(){
             this.showDashboard();
@@ -102,6 +87,7 @@ CMS.Routers = CMS.Routers || {};
             var logout = new CMS.Models.Logout();
 
             logout.fetch().done(function(){
+                CMS.Global.userdata.unset('token');
                 CMS.Global.router.navigate('login', {trigger:true});
             });
         },
@@ -153,7 +139,7 @@ CMS.Routers = CMS.Routers || {};
 
         },
         showDefault: function(){
-            CMS.Global.router.navigate('#dashboard', {trigger:true});
+            CMS.Global.router.navigate('#login', {trigger:true});
         }
     });
 

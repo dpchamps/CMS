@@ -26,7 +26,8 @@ CMS.Models = CMS.Models || {};
 
         defaults: {
             username: '',
-            password: ''
+            password: '',
+            token: ''
         },
 
         validate: function(attrs, options) {

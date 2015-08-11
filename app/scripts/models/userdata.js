@@ -14,6 +14,15 @@ CMS.Models = CMS.Models || {};
                 username : sessionStorage['username'],
                 token   : sessionStorage['token']
             });
+            this.on('change', function(){
+                var userdata = CMS.Global.userdata;
+                if(userdata.hasChanged('username')){
+                    sessionStorage.setItem('username', userdata.get('username'));
+                }
+                if(userdata.hasChanged('token')){
+                    sessionStorage.setItem('token', userdata.get('token'));
+                }
+            });
         },
 
         defaults: {

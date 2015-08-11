@@ -21,14 +21,26 @@ CMS.Views = CMS.Views || {};
                 username: $('input.login--username').val(),
                 password: $('input.login--password').val()
             });
+            /*
             $.ajaxSetup({
                 headers : {
                     'Authorization' :'Basic '+ btoa(this.model.get('username')+":"+this.model.get('password'))
                 }
             });
+            */
+            var authHeader = 'Basic '+ btoa(this.model.get('username')+":"+this.model.get('password'))
             this.model.fetch({
-
+                beforeSend : function(xhr){
+                    xhr.setRequestHeader('Authorization', authHeader);
+                },
                 success : function(c,r,o){
+                    console.log(r);
+                    Backbone.$.ajaxSetup({
+                        //var tokenAuth = 'Basic '+ btoa(c.get('username')+":"+)
+                        headers : {
+                            'Authorization' :'Basic '+ btoa(c.get('username')+":"+r.token)
+                        }
+                    });
                     CMS.Global.router.navigate('dashboard', {trigger:true});
                 },
                 error : function(c,r,o){
