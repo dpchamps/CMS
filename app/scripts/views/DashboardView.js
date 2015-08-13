@@ -8,7 +8,7 @@ CMS.Views = CMS.Views || {};
     CMS.Views.DashboardView = Backbone.View.extend({
         //child views
         pagePanel : null,
-        contentPanel: null,
+        contentPanel: undefined,
 
         template: JST['app/scripts/templates/Dashboard.ejs'],
 
@@ -30,8 +30,10 @@ CMS.Views = CMS.Views || {};
         showSettings: function(e){
 
         },
-        initialize: function () {
+        initialize: function (options) {
+            this.options = options || {};
 
+            this.contentPanel = this.options.contentPanel;
             this.listenTo(this.model, 'change', this.render);
 
         },
@@ -48,6 +50,12 @@ CMS.Views = CMS.Views || {};
                 this.contentPanel.setElement(this.$el.find('.page-content'));
                 this.contentPanel.render();
             }
+            /*
+            if(this.contentPanel){
+                this.contentPanel.setElement(this.$el.find('.page-content'));
+                this.contentPanel.render();
+            }
+            */
 
         }
 

@@ -6,7 +6,7 @@ CMS.Modules = CMS.Modules || {};
     'use strict';
     CMS.Modules.getSectionOrder = function(o){
         var section = [];
-
+        console.log(o);
         _.each(o, function(item){
             var last = section[section.length-1];
             if(typeof last === 'undefined'){

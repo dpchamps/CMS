@@ -21,13 +21,6 @@ CMS.Views = CMS.Views || {};
                 username: $('input.login--username').val(),
                 password: $('input.login--password').val()
             });
-            /*
-            $.ajaxSetup({
-                headers : {
-                    'Authorization' :'Basic '+ btoa(this.model.get('username')+":"+this.model.get('password'))
-                }
-            });
-            */
             var authHeader = 'Basic '+ btoa(this.model.get('username')+":"+this.model.get('password'))
             this.model.fetch({
                 beforeSend : function(xhr){

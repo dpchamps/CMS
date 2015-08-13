@@ -8,15 +8,16 @@ if(subDivide){
 <%
     })
 }
-
+console.log(this);
 //next, we break down the 'group'
 _.each(sectionOrder, function(type){
 %>
     <h3><%=type%></h3>
     <ul>
 <%
+    console.log(items);
     _.each(items.where({header: type}), function(item){
-
+        console.log(item);
 %>
         <li class="item-editable" data-id="<%=item.get('id')%>">
         <a href="<%=url+subPage%>/edit/<%=item.get('id')%>"><%=item.get('title')%></a>

@@ -7,17 +7,19 @@ CMS.Collections = CMS.Collections || {};
 
     CMS.Collections.PageContentItems = Backbone.Collection.extend({
         content : '',
-        page: '',
-        subContent: '',
         urlRoot : CMS.API+'/pages/',
         url: '',
+        page: '',
+        subPage: '',
         model: CMS.Models.PageContentItem,
-        initialize: function(models, options){
+        initialize: function(options){
             this.page = options.page;
-            this.subContent = options.subContent;
-            this.url = this.urlRoot +this.page.toLowerCase();
-            if(this.subContent){
-                this.url += '/'+this.subContent;
+            this.subPage = options.subPage;
+            console.log(this.page, this.subPage);
+
+            this.url = this.urlRoot +options.page.toLowerCase();
+            if(this.subPage){
+                this.url += '/'+this.subPage;
             }
         }
     });

@@ -31,12 +31,12 @@ CMS.Routers = CMS.Routers || {};
             '#/' : 'showDefault'
 
         },
-        
         showLogin: function(e){
             var self = this;
             //no use in logging in multiple times
             CMS.Modules.Auth.checkSession()
                 .done(function(){
+                    self.navigate('dashboard');
                     self.showDashboard();
                 })
                 .fail(function(){
@@ -49,7 +49,6 @@ CMS.Routers = CMS.Routers || {};
                 model: new CMS.Models.DashboardModel(),
                 el: $('#content')
             });
-            _.extend(this.dashboard, args);
             self.dashboard.render();
         },
         showSettings: function(){
@@ -60,7 +59,6 @@ CMS.Routers = CMS.Routers || {};
 
         },
         changeUsername: function(){
-            this.showDashboard();
             this.showSettings();
             new CMS.Views.Changeusername({
                 model: new CMS.Models.SettingsModel(),
@@ -68,7 +66,6 @@ CMS.Routers = CMS.Routers || {};
             }).render();
         },
         changePassword: function(){
-            this.showDashboard();
             this.showSettings();
             new CMS.Views.Changepassword({
                 model: new CMS.Models.SettingsModel(),
@@ -84,6 +81,17 @@ CMS.Routers = CMS.Routers || {};
             });
         },
         pageContent: function(page, subPage){
+            console.log(page, subPage);
+            this.dashboard = new CMS.Views.DashboardView({
+                model: new CMS.Models.DashboardModel(),
+                el: $('#content'),
+                contentPanel : new CMS.Views.Pagecontent({
+                    page : page,
+                    subPage : subPage
+                })
+            });
+            this.dashboard.render();
+            /*
             var self = this,
                 dashPromise = $.Deferred(),
                 contentPanel = new CMS.Views.Pagecontent({
@@ -92,11 +100,9 @@ CMS.Routers = CMS.Routers || {};
                         subContent: subPage
                     })
                 });
-            contentPanel.page = page;
-            contentPanel.subPage= subPage;
+
             contentPanel.collection.fetch({
                 success: function(c,r,m){
-                    console.log(r);
                     var subDivide = contentPanel.collection.toJSON()[0].type;
                     if(!subPage && subDivide){
                         contentPanel.collection.subContent = subDivide;
@@ -111,6 +117,7 @@ CMS.Routers = CMS.Routers || {};
             });
 
             return dashPromise;
+            */
         },
         itemEdit: function(page, subPage, item){
             var self = this;

@@ -24,7 +24,7 @@ CMS.Views = CMS.Views || {};
         },
         closeDialog : function(){
             this.$el.css('visibility', 'hidden');
-            CMS.Global.router.navigate('dashboard');
+            CMS.Global.router.navigate('dashboard', {trigger: true});
         },
         render: function () {
             this.$el

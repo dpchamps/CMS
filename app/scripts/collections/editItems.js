@@ -6,9 +6,14 @@ CMS.Collections = CMS.Collections || {};
     'use strict';
 
     CMS.Collections.EditItems = Backbone.Collection.extend({
+        url : '',
+        model: CMS.Models.EditItemModel,
+        initialize: function(options){
+            this.options = options || {};
+            console.log(options);
 
-        model: CMS.Models.EditItemModel
-
+            this.url = options.url;
+        }
     });
 
 })();
