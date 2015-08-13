@@ -3,7 +3,7 @@
 
 window.CMS = {
     //the api path
-    API: "http://localhost/CMS/api",
+    API: "http://localhost/RESTAPI/api/",
     Models: {},
     Modules: {},
     Collections: {},
